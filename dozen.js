@@ -56,6 +56,9 @@ class Doos {
   set doosBreedte(doosBreedte){
     this._doosBreedte = doosBreedte;
   }
+  set producten(producten){
+    this._producten = producten;
+  }
   voegProductToe(product) {
     this._producten.push(product);
   }
@@ -66,6 +69,12 @@ class Doos {
     this._producten = new Array();
   }
   
+}
+
+function verwijderAlleProductenUitElkedoos(dozen) {
+  for(let d of dozen){
+    d.producten = new Array();
+  }
 }
 
 //GEEF MATEN PRODUCTEN
@@ -262,9 +271,71 @@ doos.doosBreedte = maxBreedte;
   });
 
   console.log(dozen);
+
+
+  verwijderAlleProductenUitElkedoos(dozen);
+  voegProductenToeAanDoosMetZoKleinMogelijkeRestWaarde(producten, dozen);
   DozentoHtml(dozen);
+}
 
+function pastInDoos(doos,product){
+  return (doos.doosHoogte >= product.productHoogte && doos.doosLengte>=product.productLengte && doos.doosBreedte >= product.productBreedte);
+  }
 
+  function berekenRest(doos, product) {
+    let rest = 0;
+    rest += Math.abs(doos.doosLengte - product.productLengte);
+    rest += Math.abs(doos.doosBreedte - product.productBreedte);
+    rest += Math.abs(doos.doosHoogte - product.productHoogte);
+    return rest;
+  }
+  function voegProductToeAanDoos(doos, product) {
+    const arr = doos.producten;
+    arr.push(product);
+    doos.producten = arr;
+  }
+
+//Jesus, wtf is die naam zelf
+function voegProductenToeAanDoosMetZoKleinMogelijkeRestWaarde( producten, dozen) {
+  verwijderAlleProductenUitElkedoos(dozen);
+  producten.forEach((product) => {
+    let restWaarde;
+    let besteDoos;
+
+    dozen.forEach((doos) => {
+      if (besteDoos === undefined && pastInDoos(doos, product)) {
+        restWaarde = berekenRest(doos, product);
+        besteDoos = doos;
+      } else {
+        const rest = berekenRest(doos, product);
+        if (rest < restWaarde && pastInDoos(doos, product)) {
+          restWaarde = rest;
+          besteDoos = doos;
+        }
+      }
+    });
+
+    //Product pas in geen enkele doos:
+    if(besteDoos == undefined){
+      dozen.forEach((doos) => {
+        if (besteDoos === undefined) {
+          restWaarde = berekenRest(doos, product);
+          besteDoos = doos;
+        } else {
+          const rest = berekenRest(doos, product);
+          if (rest < restWaarde) {
+            restWaarde = rest;
+            besteDoos = doos;
+          }
+        }
+      });
+      if(besteDoos.doosHoogte < product.productHoogte) besteDoos.doosHoogte = product.productHoogte;
+      if(besteDoos.dooslengte  < product.productLengte) besteDoos.dooslengte = product.productLengte;
+      if(besteDoos.doosBreedte < product.productBreedte) besteDoos.doosBreedte = product.productBreedte;
+    }
+    voegProductToeAanDoos(besteDoos, product);
+
+  });
 }
 function berekenRestWaarde(product, doos){
   let rest = 0;
