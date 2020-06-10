@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+
+    <script src="dropzone.js"></script>
+    <script src="dozen.js"></script>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+  
+    <h1>Box matcher</h1>
+    <p></p>
+    <p></p>
+    <input type="file" name="Chose file" id="filechooser">
+    <p></p>
+    <p></p>
+    <p></p>
+    <form id="geenKleur">
+        <label for="MaxDozen">hoeveel dozen maximum</label><br>
+        <input type="number" id="maxDozen" name="maxDozen" value="20"><br>
+    </form>
+    <p></p>
+    <button id="knop" onclick="">Bereken</button>
+
+    <main class="st_viewport">
+     <div id="tabel" class="tabel">
+
+    </div>
+    </main>
+    <footer>
+        <div class="footer">
+            <p>© Kobe Deschuytter & Xander Nuytinck in opdracht voor Katoen Natie</p>
+          </div>
+    </footer>
+   
+</body>
+
+
+</html>
