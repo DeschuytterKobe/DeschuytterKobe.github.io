@@ -6,9 +6,15 @@ const doosFixed = new Array();
 class Product {
   constructor(productCode, productLengte, productHoogte, productBreedte) {
     this._productCode = productCode;
-    this._productLengte = productLengte;
-    this._productHoogte = productHoogte;
-    this._productBreedte = productBreedte;
+
+
+          //Steek alle afmetingen in een array, en sorteer van klein naar groot.
+  let afmetingen = [productLengte,productHoogte, productBreedte];
+    afmetingen = afmetingen.sort(function (a, b) {  return a - b;  });
+
+    this._productLengte = afmetingen[2];
+    this._productHoogte = afmetingen[0];
+    this._productBreedte = afmetingen[1];
   }
   get productCode() {
     return this._productCode;
@@ -195,11 +201,8 @@ dozen.push(grootsteDoos);
 
 //Loop eerst door alle producten die er zijn.
   producten.forEach(prod => {
-      //Steek alle afmetingen in een array, en sorteer van klein naar groot.
-      let afmetingen = [prod.productBreedte, prod.productHoogte, prod.productLengte];
-      afmetingen = afmetingen.sort(function (a, b) {  return a - b;  });
 
-
+    
 
     //Loop door alle dozen in de lijst, en kies diegene met de laagste restwaarde
     //Restwaarde betekent bij ons het verschil in afmetingen tussen de doos en het product
